@@ -1,0 +1,21 @@
+{
+    "arguments": [
+        "ls",
+        "~/Desktop"
+    ],
+    "description": "generated command",
+    "reelFirstStep": {
+        "expect": [
+            "(?m)(.|\\n)*"
+        ],
+        "timeout": 2000000000
+    },
+    "resultContexts": [
+        {
+            "pattern": "(?m)(.|\\n)*",
+            "defaultResult": 0
+        }
+    ],
+    "testResult": 2,
+    "testTimeout": 2000000000
+}

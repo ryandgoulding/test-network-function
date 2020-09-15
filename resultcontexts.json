@@ -1,0 +1,5 @@
+{
+      "execute": "echo $SOMEVAR\n",
+      "expect": ["beer"],
+      "timeout": 20000000000
+}

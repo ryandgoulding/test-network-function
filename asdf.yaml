@@ -1,0 +1,38 @@
+arguments:
+- cd
+- /tmp
+- '&&'
+- curl
+- -X
+- GET
+- https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+- '>'
+- epel-release-latest-7.noarch.rpm
+- '&&'
+- yum
+- -y
+- install
+- ./epel-release-latest-7.noarch.rpm
+- 2>&1
+reelFirstStep:
+  expect:
+  - (?m)No package (\w+) available.*
+  - (?m).*Complete!
+  - (?m).*Nothing to do
+  timeout: 20s
+resultContexts:
+- pattern: (?m)No package (\w+) available.*
+  composedAssertions:
+  - assertions:
+    - regex: {}
+      match: ""
+      matchIdx: 1
+      condition:
+        expected: iperf
+    logic: {}
+  result: 2
+- pattern: (?m).*Complete!
+- pattern: (?m).*Nothing to do
+testResult: 2
+testTimeout: 20s
+

@@ -1,0 +1,46 @@
+{
+    "arguments": [
+        "yum",
+        "install",
+        "-y",
+        "iperf",
+        "2\u003e\u00261"
+    ],
+    "reelFirstStep": {
+        "expect": [
+            "(?m)No package (\\w+) available.*",
+            "(?m).*Complete!",
+            "(?m).*Nothing to do"
+        ],
+        "timeout": 20000000000
+    },
+    "resultContexts": [
+        {
+            "pattern": "(?m)No package (\\w+) available.*",
+            "composedAssertions": [
+                {
+                    "assertions": [
+                        {
+                            "regex": {},
+                            "match": "",
+                            "matchIdx": 1,
+                            "condition": {
+                                "expected": "iperf"
+                            }
+                        }
+                    ],
+                    "logic": {}
+                }
+            ],
+            "result": 2
+        },
+        {
+            "pattern": "(?m).*Complete!"
+        },
+        {
+            "pattern": "(?m).*Nothing to do"
+        }
+    ],
+    "testResult": 2,
+    "testTimeout": 20000000000
+}

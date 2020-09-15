@@ -1,0 +1,21 @@
+{
+    "arguments": [
+        "ps"
+    ],
+    "description": "generated command",
+    "reelFirstStep": {
+        "expect": [
+            "(?m)(.|\\n)+"
+        ],
+        "timeout": 1000000000
+    },
+    "resultContexts": [
+        {
+            "pattern": "(?m)(.|\\n)+",
+            "defaultResult": 0,
+            "nextResultContexts": []
+        }
+    ],
+    "testResult": 2,
+    "testTimeout": 1000000000
+}

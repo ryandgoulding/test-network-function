@@ -1,0 +1,102 @@
+{
+    "arguments": [
+        "yum",
+        "install",
+        "-y",
+        "iperf",
+        "2\u003e\u00261"
+    ],
+    "description": "This test attempts to install iperf in the underlying container.",
+    "reelFirstStep": {
+        "expect": [
+            "(?m)(.+)",
+            "(?m)No package (\\w+) available.*",
+            "(?m).*Complete!",
+            "(?m).*Nothing to do"
+        ],
+        "timeout": 20000000000
+    },
+    "resultContexts": [
+        {
+          "pattern": "(?m)(.+)",
+          "composedAssertions": [
+            {
+              "assertions": [
+                {
+                  "regex": {},
+                  "match": "",
+                  "matchIdx": 0,
+                  "condition": {
+                    "type": "equals",
+                    "expected": "Loaded plugins: ovl, product-id, search-disabled-repos, subscription-manager2"
+                  }
+                }
+              ],
+              "logic": {
+                "type": "or"
+              }
+            }
+          ],
+            "defaultResult": 2
+        },
+        {
+            "pattern": "(?m)No package (\\w+) available.*",
+            "composedAssertions": [
+                {
+                    "assertions": [
+                        {
+                            "regex": {},
+                            "match": "",
+                            "matchIdx": 0,
+                            "condition": {
+                                "type": "intComparison",
+                                "input": 27,
+                                "comparison": "=="
+                            }
+                        },
+                        {
+                            "regex": {},
+                            "match": "",
+                            "matchIdx": 1,
+                            "condition": {
+                                "type": "equals",
+                                "expected": "unexpected"
+                            }
+                        },
+                        {
+                            "regex": {},
+                            "match": "",
+                            "matchIdx": 0,
+                            "condition": {
+                                "type": "isInt"
+                            }
+                        },
+                        {
+                            "regex": {},
+                            "match": "",
+                            "matchIdx": 1,
+                            "condition": {
+                                "type": "equals",
+                                "expected": "iperf"
+                            }
+                        }
+                    ],
+                    "logic": {
+                        "type": "or"
+                    }
+                }
+            ],
+            "defaultResult": 2
+        },
+        {
+            "pattern": "(?m).*Complete!",
+            "defaultResult": 0
+        },
+        {
+            "pattern": "(?m).*Nothing to do",
+            "defaultResult": 0
+        }
+    ],
+    "testResult": 2,
+    "testTimeout": 20000000000
+}

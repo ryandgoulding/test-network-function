@@ -1,0 +1,76 @@
+{
+    "arguments": [
+        "if",
+        "[",
+        "-e",
+        "/etc/redhat-release",
+        "];",
+        "then",
+        "cat",
+        "/etc/redhat-release;",
+        "else",
+        "echo",
+        "\"Unknown",
+        "Base",
+        "Image\";",
+        "fi"
+    ],
+    "description": "generated command",
+    "reelFirstStep": {
+        "expect": [
+            "(?m)Red Hat Enterprise Linux Server release (\\d+\\.\\d+) \\((\\w+)\\)"
+        ],
+        "timeout": 2000000000
+    },
+    "resultContexts": [
+        {
+            "pattern": "(?m)Red Hat Enterprise Linux Server release (\\d+\\.\\d+) \\((\\w+)\\)",
+            "composedAssertions": [
+                {
+                    "assertions": [
+                        {
+                            "groupIdx": 1,
+                            "condition": {
+                                "type": "equals",
+                                "expected": "7.8"
+                            }
+                        },
+                        {
+                            "groupIdx": 2,
+                            "condition": {
+                                "type": "equals",
+                                "expected": "Maipo"
+                            }
+                        }
+                    ],
+                    "logic": {
+                        "type": "and"
+                    }
+                },
+                {
+                    "assertions": [
+                        {
+                            "groupIdx": 0,
+                            "condition": {
+                                "type": "isInt"
+                            }
+                        },
+                        {
+                            "groupIdx": 1,
+                            "condition": {
+                                "type": "equals",
+                                "expected": "7.8"
+                            }
+                        }
+                    ],
+                    "logic": {
+                        "type": "or"
+                    }
+                }
+            ],
+            "defaultResult": 0
+        }
+    ],
+    "testResult": 2,
+    "testTimeout": 2000000000
+}

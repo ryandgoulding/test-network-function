@@ -1,0 +1,37 @@
+{
+  "$schema": "",
+  "description": "This test attempts to install iperf in the underlying container.",
+  "reelFirstStep": {
+    "execute": "export SOMEVAR=\"beer\"\n",
+    "expect": [
+      "(?m).*"
+    ],
+    "timeout": 20000000000
+  },
+  "resultContexts": [
+    {
+      "pattern": "(?m).*",
+      "nextStep": {
+        "execute": "echo $SOMEVAR\n",
+        "expect": ["beer"],
+        "timeout": 20000000000
+      },
+      "nextResultContexts": [
+        {
+          "pattern": "beer",
+          "defaultResult": 0
+        }
+      ]
+    },
+    {
+      "pattern": "(?m).*Complete!",
+      "defaultResult": 0
+    },
+    {
+      "pattern": "(?m).*Nothing to do",
+      "defaultResult": 0
+    }
+  ],
+  "testResult": 2,
+  "testTimeout": 20000000000
+}

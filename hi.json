@@ -1,0 +1,21 @@
+{
+    "arguments": [
+        "echo",
+        "\"hi\""
+    ],
+    "description": "generated command",
+    "reelFirstStep": {
+        "expect": [
+            ".+"
+        ],
+        "timeout": 2000000000
+    },
+    "resultContexts": [
+        {
+            "pattern": ".+",
+            "defaultResult": 0
+        }
+    ],
+    "testResult": 2,
+    "testTimeout": 2000000000
+}

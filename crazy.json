@@ -1,0 +1,92 @@
+{
+  "description": "This test attempts to install iperf in the underlying container.",
+  "reelFirstStep": {
+    "execute": "yum install -y iperf 2\u003e\u00261\n",
+    "expect": [
+      "(?m)No package (\\w+) available(.|\n)*",
+      "(?m).*Complete!",
+      "(?m).*Nothing to do"
+    ],
+    "timeout": 20000000000
+  },
+  "resultContexts": [
+    {
+      "pattern": "(?m)No package (\\w+) available(.|\n)*",
+      "composedAssertions": [
+        {
+          "assertions": [
+            {
+              "groupIdx": 1,
+              "condition": {
+                "type": "equals",
+                "expected": "iperf"
+              }
+            }
+          ],
+          "logic": {
+            "type": "and"
+          }
+        }
+      ],
+      "defaultResult": 2,
+      "nextStep": {
+        "expect": ["(?m).*Nothing to do"],
+        "timeout": 20000000000
+      },
+      "nextResultContexts": [
+        {
+          "pattern": "(?m).*Nothing to do",
+          "nextStep": {
+            "execute": "echo \"a bigbear\"\n",
+            "expect": ["(?m).*(bigbear).*"],
+            "timeout": 20000000000
+          },
+          "nextResultContexts": [
+            {
+              "pattern": "(?m).*(bigbear).*",
+              "composedAssertions": [
+                {
+                  "assertions": [
+                    {
+                      "groupIdx": 1,
+                      "condition": {
+                        "type": "equals",
+                        "expected": "bigbear"
+                      }
+                    }
+                  ],
+                  "logic": {
+                    "type": "and"
+                  }
+                }
+              ],
+              "nextStep": {
+                "execute": "ping -c 1 172.17.0.6\n",
+                "expect": ["(?m)(\\d+) packets transmitted, (\\d+)( packets){0,1} received, (?:\\+(\\d+) errors)?.*$"],
+                "timeout": 20000000000
+              },
+              "nextResultContexts": [
+                {
+                  "pattern": "(?m)(\\d+) packets transmitted, (\\d+)( packets){0,1} received, (?:\\+(\\d+) errors)?.*$",
+                  "defaultResult": 0
+                }
+              ],
+              "defaultResult": 0
+            }
+          ],
+          "defaultResult": 1
+        }
+      ]
+    },
+    {
+      "pattern": "(?m).*Complete!",
+      "defaultResult": 0
+    },
+    {
+      "pattern": "(?m).*Nothing to do",
+      "defaultResult": 0
+    }
+  ],
+  "testResult": 2,
+  "testTimeout": 20000000000
+}

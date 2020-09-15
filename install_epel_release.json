@@ -1,0 +1,43 @@
+{
+    "arguments": [
+        "cd",
+        "/tmp",
+        "\u0026\u0026",
+        "curl",
+        "-X",
+        "GET",
+        "https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm",
+        "\u003e",
+        "epel-release-latest-7.noarch.rpm",
+        "\u0026\u0026",
+        "yum",
+        "-y",
+        "install",
+        "./epel-release-latest-7.noarch.rpm",
+        "2\u003e\u00261"
+    ],
+    "reelFirstStep": {
+        "expect": [
+            "(?m)No package (\\w+) available.*",
+            "(?m).*Complete!",
+            "(?m).*Nothing to do"
+        ],
+        "timeout": 20000000000
+    },
+    "resultContexts": [
+        {
+            "pattern": "(?m)No package (\\w+) available.*",
+            "result": 2
+        },
+        {
+            "pattern": "(?m).*Complete!",
+            "result": 0
+        },
+        {
+            "pattern": "(?m).*Nothing to do",
+            "result": 0
+        }
+    ],
+    "testResult": 2,
+    "testTimeout": 20000000000
+}
