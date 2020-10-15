@@ -30,6 +30,7 @@ func init() {
 		"the path of the report file containing details for failed tests")
 	TConfig, _ = GetConfig()
 }
+//TestOperatorTest ...Main test operator function
 func TestOperatorTest(t *testing.T) {
 	RegisterFailHandler(Fail)
 	var ginkgoReporters []Reporter
