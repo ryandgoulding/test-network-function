@@ -57,14 +57,18 @@ var _ = ginkgo.Describe(testSpecName, func() {
 				//i := i
 				defer ginkgo.GinkgoRecover()
 				gomega.Expect(config).ToNot(gomega.BeNil())
-				oc := getOcSession(config.BNGUserPlanePod, config.BNGUserPlaneContainer, config.Namespace, defaultTimeout, expect.Verbose(true))
-				gomega.Expect(oc).ToNot(gomega.BeNil())
-				gomega.Expect(oc.GetExpecter()).ToNot(gomega.BeNil())
+				//oc := getOcSession(config.BNGUserPlanePod, config.BNGUserPlaneContainer, config.Namespace, defaultTimeout, expect.Verbose(true))
+				goExpectSpawner := interactive.NewGoExpectSpawner()
+				var spawner interactive.Spawner = goExpectSpawner
+				context, err := interactive.SpawnShell(&spawner, defaultTimeout, expect.Verbose(true))
+				gomega.Expect(err).To(gomega.BeNil())
+				gomega.Expect(context).ToNot(gomega.BeNil())
+				gomega.Expect(context.GetExpecter()).ToNot(gomega.BeNil())
 				var dataPlane *BenuBNG
 				dataPlane = NewBenuBNG(defaultTimeout, config.BNGUserPlanePod, config.Namespace, BenuBNGShowCounterCmd)
 				for i := 0; i <= 10; i++ {
 					time.Sleep(2 * time.Second)
-					test, err := tnf.NewTest(oc.GetExpecter(), dataPlane, []reel.Handler{dataPlane}, oc.GetErrorChannel())
+					test, err := tnf.NewTest(context.GetExpecter(), dataPlane, []reel.Handler{dataPlane}, context.GetErrorChannel())
 					gomega.Expect(err).To(gomega.BeNil())
 					gomega.Expect(test).ToNot(gomega.BeNil())
 					testResult, err := test.Run()
